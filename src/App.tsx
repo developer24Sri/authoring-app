@@ -1,3 +1,4 @@
+import TreePanel from "./components/TreePanel/TreePanel"
 
 
 function App() {
@@ -5,7 +6,7 @@ function App() {
 
   return (
     <>
-    
+    <TreePanel />
     </>
   )
 }
