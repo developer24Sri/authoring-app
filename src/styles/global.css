@@ -1,0 +1,20 @@
+@import "./fonts.css";
+@import "tailwindcss";
+
+/* ─── Design tokens ──────────────────────────────────── */
+@theme {
+  --font-sans:           "Inter-Regular",  ui-sans-serif, system-ui, sans-serif;
+  --font-inter-medium:   "Inter-Medium",   ui-sans-serif, system-ui, sans-serif;
+  --font-inter-semibold: "Inter-SemiBold", ui-sans-serif, system-ui, sans-serif;
+  --font-inter-bold:     "Inter-Bold",     ui-sans-serif, system-ui, sans-serif;
+}
+
+
+/* ─── Global font — change once, affects all ─────────── */
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

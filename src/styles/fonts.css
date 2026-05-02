@@ -1,0 +1,58 @@
+/*
+ * fonts.css
+ *
+ * All @font-face declarations live here.
+ * This file is imported ONCE inside main.tsx — do not import it anywhere else.
+ *
+ * To add a new font:
+ *   1. Drop the .truetype/woff/woff2/opentype files inside src/assets/fonts/<FontName>/
+ *   2. Add a new @font-face block below following the same pattern.
+ *   3. Register it in tailwind.config.ts → theme.extend.fontFamily
+ *   4. Update src/assets/fonts/README.md
+ */
+
+/* ─── Inter ─────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Inter-Regular";
+  src: url("../assets/fonts/Inter_18pt-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* shows fallback font until Inter loads — avoids invisible text */
+}
+
+@font-face {
+  font-family: "Inter-Medium";
+  src: url("../assets/fonts/Inter_18pt-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-SemiBold";
+  src: url("../assets/fonts/Inter_18pt-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-Bold";
+  src: url("../assets/fonts/Inter_18pt-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * ─── Adding a second font? Copy this block and fill in the details ───
+ *
+ * @font-face {
+ *   font-family: "YourFont";
+ *   src: url("../assets/fonts/YourFont/YourFont-Regular.truetype") format("truetype");
+ *   font-weight: 400;
+ *   font-style: normal;
+ *   font-display: swap;
+ * }
+ */
