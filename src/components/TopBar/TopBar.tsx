@@ -88,7 +88,7 @@ const TopBar = () => {
 
           {/* Invite dropdown */}
           {inviteOpen && (
-            <div className="absolute right-0 top-10 z-50 bg-white border border-gray-200 rounded-xl shadow-xl p-4 w-72">
+            <div className="absolute right-0 top-10 z-50 bg-white border border-gray-200 rounded-xl shadow-xl p-4 w-auto">
               <p className="text-sm font-semibold text-gray-800 mb-1">
                 Invite collaborators
               </p>

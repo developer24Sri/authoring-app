@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useReducer, useEffect} from "react";
+import { createContext, useContext, useReducer, useEffect, useMemo} from "react";
 import type { ReactNode } from "react";
 import type { TreeState, TreeAction, TreeContextValue } from "../types";
 import { createNode, initialState, removeNodeAndDescendants } from "../utils/treeHelpers";
@@ -82,13 +82,15 @@ const TreeContext = createContext<TreeContextValue | null>(null)
 export const TreeProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(treeReducer, undefined, loadState)
 
+    const value = useMemo(() => ({state, dispatch}), [state])
+
     //on every state changes we save it to localStorage
     useEffect(() => {
         localStorage.setItem("authoring-tree", JSON.stringify(state))
     }, [state])
 
     return (
-        <TreeContext.Provider value={{ state, dispatch }}>
+        <TreeContext.Provider value={value}>
             {children}
         </TreeContext.Provider>
     )

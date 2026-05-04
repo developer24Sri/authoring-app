@@ -71,3 +71,38 @@ export default defineConfig([
   },
 ])
 ```
+# Authoring App
+
+A responsive Single Page Application for authoring structured learning content — built with React, TypeScript, and Tailwind CSS.
+
+---
+
+## Tech Stack
+
+| Layer | Choice | Reason |
+|-------|--------|--------|
+| Framework | React 18 + Vite | Fast dev server, modern React features |
+| Language | TypeScript | Type safety catches bugs at compile time |
+| Styling | Tailwind CSS v4 | Utility-first, no CSS files needed |
+| Editor | Tiptap v3 | Best Medium-style WYSIWYG for React |
+| State | useReducer + Context | Scalable without Redux overhead |
+| Persistence | localStorage | No API required per assignment spec |
+
+---
+
+## Features
+
+- **Tree Navigator** — Unlimited depth hierarchy of container and leaf nodes. Add, remove, rename nodes with hover controls.
+- **WYSIWYG Editor** — Medium-style editor powered by Tiptap with floating toolbar (bold, italic, headings, lists, blockquote, links).
+- **Rich Content** — Insert images and videos via URL. Click to select and remove inserted media.
+- **Comments** — Highlight any text, add a comment. Hover the highlighted text to see comment tooltip with timestamp and delete option.
+- **Breadcrumb Navigation** — Editor header shows the full ancestor path. Click any ancestor to navigate directly.
+- **localStorage Persistence** — Full tree structure and all node content survives page refresh.
+- **Hamburger Drawer** — Module switcher slides in from the left.
+- **Tree / Graph toggle** — Switch between tree view and graph view tab.
+- **Invite Collaborators** — Invite team members by email (stored in localStorage).
+- **User Menu** — Profile, theme toggle, settings and logout dropdown.
+
+---
+
+## Project Structure

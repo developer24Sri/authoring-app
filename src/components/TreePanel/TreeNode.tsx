@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTree } from "../../context/TreeContext";
 import type { NodeType } from "../../types";
 import { DownArrowIcon } from "../SVG/useSVG";
+import { memo } from 'react'
 
 interface TreeNodeProps {
     id: string,
@@ -155,4 +156,4 @@ const TreeNode = ({ id, depth = 0 }: TreeNodeProps) => {
     )
 }
 
-export default TreeNode;
+export default memo(TreeNode);

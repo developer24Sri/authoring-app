@@ -9,6 +9,7 @@ import Link from '@tiptap/extension-link'
 import HightLight from "@tiptap/extension-highlight"
 import WidgetInserter from './WidgetInserter'
 import CommentTooltip from './CommentToolTip'
+import { getAncestors } from '../../utils/treeHelpers'
 
 const Editor = () => {
     const { state, dispatch } = useTree()
@@ -82,11 +83,30 @@ const Editor = () => {
                         <span className="text-sm">
                             {activeNode.type === 'container' ? '📁' : '📄'}
                         </span>
-                        <div>
+                        {/* Breadcrumb */}
+                        <div className="flex items-center gap-1 flex-wrap">
+                            {getAncestors(state.nodes, activeNode.id).map((ancestor) => (
+                                <div key={ancestor.id} className="flex items-center gap-1">
+                                    <button
+                                        onClick={() =>
+                                            dispatch({ type: 'SET_ACTIVE', payload: { id: ancestor.id } })
+                                        }
+                                        className="text-xs text-gray-400 hover:text-blue-500 transition-colors hover:underline"
+                                    >
+                                        {ancestor.label}
+                                    </button>
+                                    <svg
+                                        className="w-3 h-3 text-gray-300 flex-shrink-0"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            ))}
+                            {/* Current active node — not clickable */}
                             <h2 className="text-sm font-semibold text-gray-800 leading-tight">
                                 {activeNode.label}
                             </h2>
-                            <p className="text-xs text-gray-400 capitalize">{activeNode.type}</p>
                         </div>
                     </div>
                 </div>

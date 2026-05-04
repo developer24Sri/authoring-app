@@ -69,3 +69,17 @@ export const removeNodeAndDescendants = (
     }
     return updated
 }
+
+export const getAncestors = (
+  nodes: Record<string, TreeNode>,
+  nodeId: string
+): TreeNode[] => {
+  const ancestors: TreeNode[] = []
+  let current = nodes[nodeId]
+  while (current?.parentId) {
+    const parent = nodes[current.parentId]
+    if (parent) ancestors.unshift(parent)
+    current = parent
+  }
+  return ancestors
+}
