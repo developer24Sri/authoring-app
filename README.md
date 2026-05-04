@@ -106,3 +106,25 @@ A responsive Single Page Application for authoring structured learning content �
 ---
 
 ## Project Structure
+
+src/
+├── components/
+│   ├── TreePanel/        # Left panel — tree navigation
+│   │   ├── TreePanel.tsx
+│   │   ├── TreeNode.tsx  # Recursive component
+│   │   └── HamburgerDrawer.tsx
+│   ├── Editor/           # Right panel — content editing
+│   │   ├── Editor.tsx
+│   │   ├── Toolbar.tsx
+│   │   ├── WidgetInserter.tsx
+│   │   └── CommentTooltip.tsx
+│   └── TopBar/           # App header
+│       └── TopBar.tsx
+├── context/
+│   └── TreeContext.tsx   # Global state — useReducer + Context
+├── hooks/
+│   └── useLocalStorage.ts
+├── utils/
+│   └── treeHelpers.ts    # Pure functions — add, remove, ancestors
+└── types/
+└── index.ts          # All TypeScript interfaces
