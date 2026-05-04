@@ -42,3 +42,11 @@
     margin: 8px 0;
   }
 }
+
+@layer base {
+  .tiptap mark {
+    background-color: #FEF08A;
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+}

@@ -13,7 +13,7 @@ const WidgetInserter = ({ editor }: WidgetInserterProps) => {
   const [urlInput, setUrlInput] = useState('')
   const menuRef = useRef<HTMLDivElement>(null)
 
-  // ✅ Fix 1 — declare close BEFORE useEffect that uses it
+  //  Fix 1 — declare close BEFORE useEffect that uses it
   const close = () => {
     setIsOpen(false)
     setActiveWidget(null)
@@ -115,7 +115,7 @@ const WidgetInserter = ({ editor }: WidgetInserterProps) => {
                 onChange={e => setUrlInput(e.target.value)}
                 onKeyDown={e => {
                   if (e.key === 'Enter') {
-                    // ✅ Fix 2 — wrap in block so TS treats as statement not expression
+                    //  Fix 2 — wrap in block so TS treats as statement not expression
                     if (activeWidget === 'image') {
                       handleInsertImage()
                     } else {
@@ -128,7 +128,7 @@ const WidgetInserter = ({ editor }: WidgetInserterProps) => {
                 className="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-100 mb-2"
               />
               <button
-                // ✅ Fix 2 — explicit arrow function instead of ternary expression
+                // Fix 2.1 — explicit arrow function instead of ternary expression
                 onClick={() => {
                   if (activeWidget === 'image') {
                     handleInsertImage()

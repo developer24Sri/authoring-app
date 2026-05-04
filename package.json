@@ -12,7 +12,9 @@
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
     "@tailwindcss/vite": "^4.2.4",
+    "@tiptap/extension-highlight": "^3.22.5",
     "@tiptap/extension-image": "^3.22.5",
+    "@tiptap/extension-link": "^3.22.5",
     "@tiptap/extension-list": "^3.22.5",
     "@tiptap/extensions": "^3.22.5",
     "@tiptap/pm": "^3.22.5",

@@ -5,7 +5,10 @@ import Image from '@tiptap/extension-image'
 import { Placeholder } from '@tiptap/extensions'
 import { useTree } from '../../context/TreeContext'
 import Toolbar from './Toolbar'
+import Link from '@tiptap/extension-link'
+import HightLight from "@tiptap/extension-highlight"
 import WidgetInserter from './WidgetInserter'
+import CommentTooltip from './CommentToolTip'
 
 const Editor = () => {
     const { state, dispatch } = useTree()
@@ -20,6 +23,13 @@ const Editor = () => {
             Placeholder.configure({
                 placeholder: 'Start writing, or press + to insert content…',
             }),
+            Link.configure({
+                openOnClick: false, // don't navigate while editing
+                HTMLAttributes: {
+                    class: 'text-blue-500 underline cursor-pointer hover:text-blue-700',
+                },
+            }),
+            HightLight.configure({ multicolor: true })
         ],
         content: activeNode?.content.data ?? '',
         editorProps: {
@@ -37,6 +47,7 @@ const Editor = () => {
                 }
             })
         },
+
     })
 
     // Memoize context value to avoid unnecessary re-renders
@@ -47,7 +58,7 @@ const Editor = () => {
         const currentHTML = editor.getHTML()
         const newHTML = activeNode.content.data ?? ''
         if (currentHTML !== newHTML) {
-            // ✅ v3 fix — pass options object instead of boolean
+            //  v3 fix — pass options object instead of boolean
             editor.commands.setContent(newHTML, { emitUpdate: false })
         }
     }, [state.activeNodeId]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -63,7 +74,6 @@ const Editor = () => {
     }
 
     return (
-        // ✅ Wrap everything in EditorContext.Provider — BubbleMenu reads editor from here
         <EditorContext.Provider value={providerValue}>
             <div className="flex-1 flex flex-col bg-white overflow-hidden">
 
@@ -89,12 +99,12 @@ const Editor = () => {
                 )}
 
                 <div className="flex-1 overflow-y-auto">
-                    {/* Toolbar no longer needs editor prop — gets it from context */}
                     {editor && <Toolbar />}
                     <EditorContent editor={editor} className="h-full" />
                 </div>
-
             </div>
+            {/* Comment ToolTip */}
+            <CommentTooltip />
         </EditorContext.Provider>
     )
 }
