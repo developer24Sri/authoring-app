@@ -1,27 +1,30 @@
 import { useState, useRef } from 'react'
 import useOnClickOutside from '../../hooks/useOneClickOutside'
+import { MOCK_USER, STORAGE_KEYS } from '../../constants'
+import { useTheme } from '../../context/ThemeContext'
 
-interface User {
-  name: string
-  email: string
-  avatar: string
-}
+// interface User {
+//   name: string
+//   email: string
+//   avatar: string
+// }
 
 // Mock user — in a real app this would come from auth context
-const MOCK_USER: User = {
-  name: 'John Doe',
-  email: 'john@example.com',
-  avatar: 'JD',
-}
+// const MOCK_USER: User = {
+//   name: 'John Doe',
+//   email: 'john@example.com',
+//   avatar: 'JD',
+// }
 
 const TopBar = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [inviteOpen, setInviteOpen] = useState(false)
   const [inviteEmail, setInviteEmail] = useState('')
   const [inviteSent, setInviteSent] = useState(false)
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  // const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const userMenuRef = useRef<HTMLDivElement>(null)
   const inviteRef = useRef<HTMLDivElement>(null)
+  const { isDark, toggleTheme } = useTheme();
 
   useOnClickOutside(userMenuRef, () => setUserMenuOpen(false), userMenuOpen);
   useOnClickOutside(inviteRef, () => {
@@ -47,24 +50,27 @@ const TopBar = () => {
 
   const handleInvite = () => {
     if (!inviteEmail.trim()) return
-    // Store invited emails in localStorage
-    const key = 'authoring-invited-members'
-    const existing = JSON.parse(localStorage.getItem(key) ?? '[]')
+    const existing = JSON.parse(
+      localStorage.getItem(STORAGE_KEYS.INVITED_MEMBERS) ?? '[]'
+    )
     if (!existing.includes(inviteEmail.trim())) {
-      localStorage.setItem(key, JSON.stringify([...existing, inviteEmail.trim()]))
+      localStorage.setItem(
+        STORAGE_KEYS.INVITED_MEMBERS,
+        JSON.stringify([...existing, inviteEmail.trim()])
+      )
     }
     setInviteSent(true)
     setInviteEmail('')
   }
 
-  const handleThemeToggle = () => {
-    setTheme(p => p === 'light' ? 'dark' : 'light')
-    // In a real app — apply theme to document root
-    document.documentElement.classList.toggle('dark')
-  }
+  // const handleThemeToggle = () => {
+  //   setTheme(p => p === 'light' ? 'dark' : 'light')
+  //   // In a real app — apply theme to document root
+  //   document.documentElement.classList.toggle('dark')
+  // }
 
   return (
-    <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-200 h-12 flex-shrink-0">
+    <div className="flex items-center justify-between px-4 py-2 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 h-12 shrink-0">
 
       {/* Left — App name / breadcrumb */}
       <div className="flex items-center gap-2">
@@ -73,9 +79,9 @@ const TopBar = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
           </svg>
         </div>
-        <span className="text-sm font-semibold text-gray-800">Authoring</span>
-        <span className="text-gray-300 text-sm">/</span>
-        <span className="text-sm text-gray-500">My Course</span>
+        <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">Authoring</span>
+        <span className="text-gray-300 dark:text-gray-600 text-sm">/</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400">My Course</span>
       </div>
 
       {/* Right — Invite + User menu */}
@@ -85,7 +91,7 @@ const TopBar = () => {
         <div className="relative" ref={inviteRef}>
           <button
             onClick={() => setInviteOpen(p => !p)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors"
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -95,8 +101,8 @@ const TopBar = () => {
 
           {/* Invite dropdown */}
           {inviteOpen && (
-            <div className="absolute right-0 top-10 z-50 bg-white border border-gray-200 rounded-xl shadow-xl p-4 w-auto">
-              <p className="text-sm font-semibold text-gray-800 mb-1">
+            <div className="absolute right-0 top-10 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 w-auto">
+              <p className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-1">
                 Invite collaborators
               </p>
               <p className="text-xs text-gray-400 mb-3">
@@ -110,7 +116,7 @@ const TopBar = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <p className="text-sm font-medium text-gray-700">Invite sent!</p>
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-200">Invite sent!</p>
                   <button
                     onClick={() => setInviteSent(false)}
                     className="text-xs text-blue-500 hover:underline"
@@ -128,7 +134,7 @@ const TopBar = () => {
                       onChange={e => setInviteEmail(e.target.value)}
                       onKeyDown={e => e.key === 'Enter' && handleInvite()}
                       placeholder="colleague@example.com"
-                      className="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-100"
+                      className="flex-1 text-sm border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-1.5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-100"
                     />
                     <button
                       onClick={handleInvite}
@@ -151,7 +157,7 @@ const TopBar = () => {
         <div className="relative" ref={userMenuRef}>
           <button
             onClick={() => setUserMenuOpen(p => !p)}
-            className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-gray-100 transition-colors"
+            className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             {/* Avatar */}
             <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-semibold">
@@ -164,16 +170,16 @@ const TopBar = () => {
 
           {/* User dropdown */}
           {userMenuOpen && (
-            <div className="absolute right-0 top-10 z-50 bg-white border border-gray-200 rounded-xl shadow-xl w-56 overflow-hidden">
+            <div className="absolute right-0 top-10 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl w-56 overflow-hidden">
 
               {/* User info */}
-              <div className="px-4 py-3 border-b border-gray-100">
+              <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
+                  <div className="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-semibold shrink-0">
                     {MOCK_USER.avatar}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-gray-800 truncate">{MOCK_USER.name}</p>
+                    <p className="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">{MOCK_USER.name}</p>
                     <p className="text-xs text-gray-400 truncate">{MOCK_USER.email}</p>
                   </div>
                 </div>
@@ -197,11 +203,11 @@ const TopBar = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                   }
-                  label={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} theme`}
-                  onClick={() => { handleThemeToggle(); setUserMenuOpen(false) }}
+                  label={`Switch to ${isDark ? "Light":"Dark"} theme`}
+                  onClick={() => { toggleTheme(); setUserMenuOpen(false) }}
                   rightEl={
-                    <div className={`w-8 h-4 rounded-full transition-colors ${theme === 'dark' ? 'bg-blue-500' : 'bg-gray-200'}`}>
-                      <div className={`w-3 h-3 rounded-full bg-white shadow mt-0.5 transition-transform ${theme === 'dark' ? 'translate-x-4' : 'translate-x-0.5'}`} />
+                    <div className={`w-8 h-4 rounded-full transition-colors ${isDark ? 'bg-blue-500' : 'bg-gray-200'}`}>
+                      <div className={`w-3 h-3 rounded-full bg-white shadow mt-0.5 transition-transform ${isDark ? 'translate-x-4' : 'translate-x-0.5'}`} />
                     </div>
                   }
                 />
@@ -217,7 +223,7 @@ const TopBar = () => {
                   onClick={() => setUserMenuOpen(false)}
                 />
 
-                <div className="h-px bg-gray-100 my-1" />
+                <div className="h-px bg-gray-100 dark:bg-gray-700 my-1" />
 
                 <MenuButton
                   icon={
@@ -254,8 +260,8 @@ const MenuButton = ({ icon, label, onClick, danger, rightEl }: MenuButtonProps) 
     className={`
       w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-left
       ${danger
-        ? 'text-red-500 hover:bg-red-50'
-        : 'text-gray-600 hover:bg-gray-50'}
+        ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
+        : 'text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'}
     `}
   >
     {icon}
@@ -266,21 +272,21 @@ const MenuButton = ({ icon, label, onClick, danger, rightEl }: MenuButtonProps) 
 
 const InvitedList = () => {
   const members: string[] = JSON.parse(
-    localStorage.getItem('authoring-invited-members') ?? '[]'
+    localStorage.getItem(STORAGE_KEYS.INVITED_MEMBERS) ?? '[]'
   )
   if (members.length === 0) return null
 
   return (
-    <div className="mt-3 pt-3 border-t border-gray-100">
+    <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
       <p className="text-xs text-gray-400 mb-2">Already invited</p>
       <div className="flex flex-col gap-1.5">
         {members.map(email => (
           <div key={email} className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs font-medium flex-shrink-0">
+            <div className="w-5 h-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-gray-500 dark:text-gray-300 text-xs font-medium shrink-0">
               {email[0].toUpperCase()}
             </div>
-            <span className="text-xs text-gray-600 truncate">{email}</span>
-            <span className="ml-auto text-xs text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
+            <span className="text-xs text-gray-600 dark:text-gray-300 truncate">{email}</span>
+            <span className="ml-auto text-xs text-gray-400 bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
               Pending
             </span>
           </div>

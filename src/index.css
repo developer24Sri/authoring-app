@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@variant dark (&:where(.dark, .dark *));
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light;
+  }
+}
+
 /* Tiptap editor custom styles */
 @layer base {
   .tiptap h1 { font-size: 1.875rem; font-weight: 700; margin: 1rem 0; }
@@ -50,3 +58,4 @@
     padding: 0 2px;
   }
 }
+

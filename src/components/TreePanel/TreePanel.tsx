@@ -16,10 +16,10 @@ const TreePanel = () => {
   }
 
   return (
-    <div className="flex flex-col h-full bg-white border-r border-gray-200 w-72 flex-shrink-0">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-900 border-r border-gray-200 w-72 shrink-0">
 
       {/* Top bar of panel */}
-      <div className="flex items-center gap-2 px-3 py-3 border-b border-gray-100">
+      <div className="flex items-center gap-2 px-3 py-3 border-b border-gray-100 dark:border-gray-800">
         {/* Hamburger */}
         <button
           onClick={() => setDrawerOpen(true)}
@@ -49,7 +49,7 @@ const TreePanel = () => {
       </div>
 
       {/* Add container/leaf buttons */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100">
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100 dark:border-gray-800">
         <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Add</span>
         <button
           onClick={() => handleAddRoot('container')}
@@ -72,7 +72,7 @@ const TreePanel = () => {
       </div>
 
       {/* Tree view or Graph placeholder */}
-      <div className="flex-1 overflow-y-auto py-2 px-1">
+      <div className="flex-1 overflow-y-auto py-2 px-1 dark:bg-gray-900">
         {viewMode === 'tree' ? (
           <TreeNode id={state.rootId} depth={0} />
         ) : (
