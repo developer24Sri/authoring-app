@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTree } from "../../context/TreeContext";
+import { useActiveNode } from "../../context/ActiveNodeContext";
 import type { NodeType } from "../../types";
 import { DownArrowIcon } from "../SVG/useSVG";
 import { memo } from 'react'
@@ -11,8 +12,9 @@ interface TreeNodeProps {
 
 const TreeNode = ({ id, depth = 0 }: TreeNodeProps) => {
     const { state, dispatch } = useTree();
+    const {activeNodeId, setActiveNodeId} = useActiveNode();
     const node = state.nodes[id];
-    const isActive = state.activeNodeId === id;
+    const isActive = activeNodeId === id;
     const [isExpanded, setIsExpanded] = useState(true);
     const [isHovered, setIsHovered] = useState(false);
     const [isRenaming, setIsRenaming] = useState(false);
@@ -27,9 +29,11 @@ const TreeNode = ({ id, depth = 0 }: TreeNodeProps) => {
 
     const isContainer = node.type === "container"
 
-    const handleSelect = () => {
-        dispatch({ type: "SET_ACTIVE", payload: { id } })
-    }
+    // const handleSelect = () => {
+    //     dispatch({ type: "SET_ACTIVE", payload: { id } })
+    // }
+
+    const handleSelect = () => setActiveNodeId(id);
 
     const commitRename = () => {
         const trimmed = labelInput.trim();
@@ -45,7 +49,9 @@ const TreeNode = ({ id, depth = 0 }: TreeNodeProps) => {
     const handleAddNode = (nodeType: NodeType, e: React.MouseEvent) => {
         e.stopPropagation();
         if (!isContainer) return
+        const newId = crypto.randomUUID();
         dispatch({ type: "ADD_NODE", payload: { parentId: id, nodeType } })
+        setActiveNodeId(newId); //auto-select
         setIsExpanded(true);
     }
 

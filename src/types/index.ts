@@ -17,13 +17,12 @@ export interface TreeNode {
 export interface TreeState {
     nodes: Record<string, TreeNode>
     rootId: string
-    activeNodeId: string | null
+    // activeNodeId: string | null
 }
 
 export type TreeAction =
     | { type: 'ADD_NODE'; payload: { parentId: string; nodeType: NodeType } }
     | { type: 'REMOVE_NODE'; payload: { id: string } }
-    | { type: 'SET_ACTIVE'; payload: { id: string } }
     | { type: 'UPDATE_CONTENT'; payload: { id: string; content: NodeContent } }
     | { type: 'RENAME_NODE'; payload: { id: string; label: string } }
 

@@ -11,11 +11,15 @@ import HightLight from "@tiptap/extension-highlight"
 import WidgetInserter from './WidgetInserter'
 import CommentTooltip from './CommentToolTip'
 import { getAncestors } from '../../utils/treeHelpers'
+import { useActiveNode } from "../../context/ActiveNodeContext";
+
 
 const Editor = () => {
     const { state, dispatch } = useTree()
-    const activeNode = state.activeNodeId
-        ? state.nodes[state.activeNodeId]
+    const { activeNodeId, setActiveNodeId } = useActiveNode();
+
+    const activeNode = activeNodeId
+        ? state.nodes[activeNodeId] //we removed the state.activeNodeId as now it has its own
         : null
 
     const debounceHandler = useCallback((id: string, html: string) => {
@@ -53,8 +57,8 @@ const Editor = () => {
             },
         },
         onUpdate: ({ editor }) => {
-            if (!state.activeNodeId) return
-            debouncedDispatch(state.activeNodeId, editor.getHTML());
+            if (!activeNodeId) return
+            debouncedDispatch(activeNodeId, editor.getHTML());
         },
 
     }, []);
@@ -71,7 +75,7 @@ const Editor = () => {
             //  v3 fix — pass options object instead of boolean
             editor.commands.setContent(newHTML, { emitUpdate: false })
         }
-    }, [state.activeNodeId]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [activeNodeId]) // eslint-disable-line react-hooks/exhaustive-deps
 
 
     if (!activeNode) {
@@ -101,14 +105,14 @@ const Editor = () => {
                                 <div key={ancestor.id} className="flex items-center gap-1">
                                     <button
                                         onClick={() =>
-                                            dispatch({ type: 'SET_ACTIVE', payload: { id: ancestor.id } })
+                                            setActiveNodeId(ancestor.id)
                                         }
                                         className="text-xs text-gray-400 hover:text-blue-500 transition-colors hover:underline"
                                     >
                                         {ancestor.label}
                                     </button>
                                     <svg
-                                        className="w-3 h-3 text-gray-300 flex-shrink-0"
+                                        className="w-3 h-3 text-gray-300 shrink-0"
                                         fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     >
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

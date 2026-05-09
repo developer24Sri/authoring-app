@@ -15,7 +15,7 @@ export const createNode = (
 
 export const initialState: TreeState = {
     rootId: "root",
-    activeNodeId: null,
+    // activeNodeId: null,
     nodes: {
         root: {
             id: "root",

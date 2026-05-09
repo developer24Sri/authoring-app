@@ -28,13 +28,12 @@ const treeReducer = (state: TreeState, action: TreeAction): TreeState => {
             const updateNodes = removeNodeAndDescendants(state.nodes, action.payload.id)
             return {
                 ...state,
-                nodes: updateNodes,
-                activeNodeId: state.activeNodeId === action.payload.id ? null : state.activeNodeId
+                nodes: updateNodes
             }
         }
 
-        case "SET_ACTIVE":
-            return { ...state, activeNodeId: action.payload.id }
+        // case "SET_ACTIVE":
+        //     return { ...state, activeNodeId: action.payload.id }
 
         case "UPDATE_CONTENT":
             return {

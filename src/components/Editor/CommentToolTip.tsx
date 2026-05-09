@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useCurrentEditor } from '@tiptap/react'
-import { useTree } from '../../context/TreeContext'
 import { TrashCanIcon } from '../SVG/useSVG'
+import { useActiveNode } from '../../context/ActiveNodeContext'
 
 interface Comment {
     id: string
@@ -19,8 +19,8 @@ interface TooltipState {
 }
 
 const CommentTooltip = () => {
-    const { state } = useTree()
-    const activeNodeId = state.activeNodeId
+    // const { state } = useTree()
+    const {activeNodeId} = useActiveNode();
     const { editor } = useCurrentEditor()
     const [tooltip, setTooltip] = useState<TooltipState | null>(null)
     const tooltipRef = useRef<HTMLDivElement>(null)

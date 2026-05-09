@@ -1,13 +1,13 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { BubbleMenu } from '@tiptap/react/menus'
 import { useState } from 'react'
-import { useTree } from '../../context/TreeContext'
 import { CommentBoxIcon, LinkIcon } from '../SVG/useSVG'
+import { useActiveNode } from '../../context/ActiveNodeContext'
 
 const Toolbar = () => {
     const { editor } = useCurrentEditor()
-    const { state } = useTree();
-    const activeNodeId = state.activeNodeId;
+    // const { state } = useTree();
+    const {activeNodeId} = useActiveNode();
     const [showLinkInput, setShowLinkInput] = useState(false)
     const [linkUrl, setLinkUrl] = useState('')
 
