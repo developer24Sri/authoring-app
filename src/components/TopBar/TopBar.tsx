@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
+import useOnClickOutside from '../../hooks/useOneClickOutside'
 
 interface User {
   name: string
@@ -22,21 +23,27 @@ const TopBar = () => {
   const userMenuRef = useRef<HTMLDivElement>(null)
   const inviteRef = useRef<HTMLDivElement>(null)
 
+  useOnClickOutside(userMenuRef, () => setUserMenuOpen(false), userMenuOpen);
+  useOnClickOutside(inviteRef, () => {
+    setInviteOpen(false);
+    setInviteSent(false);
+    setInviteEmail("")
+  }, inviteOpen)
   // Close menus on outside click
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
-        setUserMenuOpen(false)
-      }
-      if (inviteRef.current && !inviteRef.current.contains(e.target as Node)) {
-        setInviteOpen(false)
-        setInviteSent(false)
-        setInviteEmail('')
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [])
+  // useEffect(() => {
+  //   const handleClick = (e: MouseEvent) => {
+  //     if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+  //       setUserMenuOpen(false)
+  //     }
+  //     if (inviteRef.current && !inviteRef.current.contains(e.target as Node)) {
+  //       setInviteOpen(false)
+  //       setInviteSent(false)
+  //       setInviteEmail('')
+  //     }
+  //   }
+  //   document.addEventListener('mousedown', handleClick)
+  //   return () => document.removeEventListener('mousedown', handleClick)
+  // }, [])
 
   const handleInvite = () => {
     if (!inviteEmail.trim()) return

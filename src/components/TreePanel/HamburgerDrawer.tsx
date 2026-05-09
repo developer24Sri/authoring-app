@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import useOnClickOutside from "../../hooks/useOneClickOutside";
 
 interface HamburgerDrawerProps {
     isOpen: boolean,
@@ -8,15 +9,16 @@ interface HamburgerDrawerProps {
 const HamburgerDrawer = ({ isOpen, onClose }: HamburgerDrawerProps) => {
     const drawerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (drawerRef.current && !drawerRef.current.contains(e.target as Node)) {
-                onClose();
-            }
-        }
-        if (isOpen) document.addEventListener("mousedown", handleClickOutside)
-        return () => document.removeEventListener("mousedown", handleClickOutside)
-    }, [isOpen, onClose])
+    useOnClickOutside(drawerRef, onClose, isOpen);
+    // useEffect(() => {
+    //     const handleClickOutside = (e: MouseEvent) => {
+    //         if (drawerRef.current && !drawerRef.current.contains(e.target as Node)) {
+    //             onClose();
+    //         }
+    //     }
+    //     if (isOpen) document.addEventListener("mousedown", handleClickOutside)
+    //     return () => document.removeEventListener("mousedown", handleClickOutside)
+    // }, [isOpen, onClose])
 
 
     const modules = [

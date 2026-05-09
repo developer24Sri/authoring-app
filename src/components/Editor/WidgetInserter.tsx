@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { Editor } from '@tiptap/react'
+import useOnClickOutside from '../../hooks/useOneClickOutside'
 
 interface WidgetInserterProps {
   editor: Editor
@@ -54,15 +55,16 @@ const WidgetInserter = ({ editor }: WidgetInserterProps) => {
     return () => editorEl.removeEventListener('click', handleEditorClick)
   }, [handleEditorClick])
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        close()
-      }
-    }
-    if (isOpen) document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isOpen])
+  useOnClickOutside(menuRef, close, isOpen);
+  // useEffect(() => {
+  //   const handleClickOutside = (e: MouseEvent) => {
+  //     if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+  //       close()
+  //     }
+  //   }
+  //   if (isOpen) document.addEventListener('mousedown', handleClickOutside)
+  //   return () => document.removeEventListener('mousedown', handleClickOutside)
+  // }, [isOpen])
 
   const handleInsertImage = () => {
     if (!urlInput.trim()) return
