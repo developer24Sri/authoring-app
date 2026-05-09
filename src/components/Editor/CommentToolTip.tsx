@@ -66,7 +66,7 @@ const CommentTooltip = () => {
     useEffect(() => {
 
         // Use editor.view.dom instead of document.querySelector('.tiptap')
-        if (!editor) return
+        if (!editor || editor.isDestroyed || !editor.view) return
         const editorDom = editor.view.dom
 
         const handleMouseOver = (e: Event) => {
@@ -102,8 +102,8 @@ const CommentTooltip = () => {
 
         return () => {
             setTooltip(null)
-            editorDom.removeEventListener('mouseover', handleMouseOver)
-            editorDom.removeEventListener('mouseout', handleMouseOut)
+            editor.view?.dom?.removeEventListener('mouseover', handleMouseOver)
+            editor.view?.dom?.removeEventListener('mouseout', handleMouseOut)
         }
     }, [activeNodeId, editor])
 

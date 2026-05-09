@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import useDebounce from '../../hooks/useDebounce'
 import { useEditor, EditorContent, EditorContext } from '@tiptap/react'  // add EditorContext
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
@@ -16,6 +17,19 @@ const Editor = () => {
     const activeNode = state.activeNodeId
         ? state.nodes[state.activeNodeId]
         : null
+
+    const debounceHandler = useCallback((id: string, html: string) => {
+        dispatch({
+            type: "UPDATE_CONTENT",
+            payload: { id, content: { type: "text", data: html } }
+        })
+    }, [dispatch]);
+
+    const { debounced: debouncedDispatch, cancel: cancelDebounce } = useDebounce(debounceHandler, 300);
+
+    const ancestors = useMemo(() =>
+        getAncestors(state.nodes, activeNode?.id || ""),
+        [state.nodes, activeNode?.id])
 
     const editor = useEditor({
         extensions: [
@@ -40,22 +54,17 @@ const Editor = () => {
         },
         onUpdate: ({ editor }) => {
             if (!state.activeNodeId) return
-            dispatch({
-                type: 'UPDATE_CONTENT',
-                payload: {
-                    id: state.activeNodeId,
-                    content: { type: 'text', data: editor.getHTML() }
-                }
-            })
+            debouncedDispatch(state.activeNodeId, editor.getHTML());
         },
 
-    })
+    }, []);
 
     // Memoize context value to avoid unnecessary re-renders
     const providerValue = useMemo(() => ({ editor }), [editor])
 
     useEffect(() => {
         if (!editor || !activeNode) return
+        cancelDebounce();
         const currentHTML = editor.getHTML()
         const newHTML = activeNode.content.data ?? ''
         if (currentHTML !== newHTML) {
@@ -63,6 +72,7 @@ const Editor = () => {
             editor.commands.setContent(newHTML, { emitUpdate: false })
         }
     }, [state.activeNodeId]) // eslint-disable-line react-hooks/exhaustive-deps
+
 
     if (!activeNode) {
         return (
@@ -73,6 +83,8 @@ const Editor = () => {
             </div>
         )
     }
+
+
 
     return (
         <EditorContext.Provider value={providerValue}>
@@ -85,7 +97,7 @@ const Editor = () => {
                         </span>
                         {/* Breadcrumb */}
                         <div className="flex items-center gap-1 flex-wrap">
-                            {getAncestors(state.nodes, activeNode.id).map((ancestor) => (
+                            {ancestors.map((ancestor) => (
                                 <div key={ancestor.id} className="flex items-center gap-1">
                                     <button
                                         onClick={() =>
