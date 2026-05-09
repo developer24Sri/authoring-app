@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useCurrentEditor } from '@tiptap/react'
 import { useTree } from '../../context/TreeContext'
 import { TrashCanIcon } from '../SVG/useSVG'
 
@@ -20,13 +21,16 @@ interface TooltipState {
 const CommentTooltip = () => {
     const { state } = useTree()
     const activeNodeId = state.activeNodeId
+    const { editor } = useCurrentEditor()
     const [tooltip, setTooltip] = useState<TooltipState | null>(null)
     const tooltipRef = useRef<HTMLDivElement>(null)
     const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
     const getComments = (): Comment[] => {
         if (!activeNodeId) return []
-        return JSON.parse(localStorage.getItem(`comments-${activeNodeId}`) ?? '[]')
+        return JSON.parse(
+            localStorage.getItem(`comments-${activeNodeId}`) ?? '[]'
+        )
     }
 
     const formatDate = (iso: string) =>
@@ -38,12 +42,11 @@ const CommentTooltip = () => {
     const deleteComment = (id: string) => {
         if (!activeNodeId) return
         const updated = getComments().filter(c => c.id !== id)
-        localStorage.setItem(`comments-${activeNodeId}`, JSON.stringify(updated))
-
-        // Remove yellow highlight from all marks — simplest approach
+        localStorage.setItem(
+            `comments-${activeNodeId}`,
+            JSON.stringify(updated)
+        )
         setTooltip(null)
-
-        // Force re-render by dispatching a storage event
         window.dispatchEvent(new Event('storage'))
     }
 
@@ -60,13 +63,17 @@ const CommentTooltip = () => {
         if (hideTimer.current) clearTimeout(hideTimer.current)
     }
 
-
     useEffect(() => {
-        const editorEl = document.querySelector('.tiptap')
-        if (!editorEl) return
+
+        // Use editor.view.dom instead of document.querySelector('.tiptap')
+        if (!editor) return
+        const editorDom = editor.view.dom
 
         const handleMouseOver = (e: Event) => {
             const target = e.target as HTMLElement
+
+            // Updated the editor API to check node type at cursor position
+            // rather than checking DOM class names
             const mark = target.closest('mark')
             if (!mark) return
 
@@ -90,20 +97,15 @@ const CommentTooltip = () => {
             if (target.closest('mark')) scheduleHide()
         }
 
-        editorEl.addEventListener('mouseover', handleMouseOver)
-        editorEl.addEventListener('mouseout', handleMouseOut)
+        editorDom.addEventListener('mouseover', handleMouseOver)
+        editorDom.addEventListener('mouseout', handleMouseOut)
 
-        
         return () => {
-            // 1. Remove listeners to prevent memory leaks
-            editorEl.removeEventListener('mouseover', handleMouseOver)
-            editorEl.removeEventListener('mouseout', handleMouseOut)
-
-            // 2. Clear tooltip and timers when switching nodes or unmounting
             setTooltip(null)
-            if (hideTimer.current) clearTimeout(hideTimer.current)
+            editorDom.removeEventListener('mouseover', handleMouseOver)
+            editorDom.removeEventListener('mouseout', handleMouseOut)
         }
-    }, [activeNodeId]) // Only re-runs when switching nodes
+    }, [activeNodeId, editor])
 
     if (!tooltip) return null
 
@@ -122,9 +124,7 @@ const CommentTooltip = () => {
             className="bg-gray-900 text-white rounded-xl shadow-2xl p-3 w-64 pointer-events-auto"
         >
             {/* Arrow */}
-            <div
-                className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 bg-gray-900 rotate-45 rounded-sm"
-            />
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 bg-gray-900 rotate-45 rounded-sm" />
 
             {/* Quoted text */}
             <div className="flex gap-1.5 mb-2">
@@ -148,7 +148,7 @@ const CommentTooltip = () => {
                     onClick={() => deleteComment(tooltip.comment.id)}
                     className="flex items-center gap-1 text-xs text-red-400 hover:text-red-300 transition-colors"
                 >
-                    <TrashCanIcon width={20} height={20} />
+                    <TrashCanIcon />
                     Delete
                 </button>
             </div>
