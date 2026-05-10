@@ -7,8 +7,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         const saved = localStorage.getItem('authoring-theme')
         if (saved === 'dark') return true
         if (saved === 'light') return false
-        // First visit — match system
-        return window.matchMedia('(prefers-color-scheme: dark)').matches
+        return false // always default to light
     })
 
     useEffect(() => {

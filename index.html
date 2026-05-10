@@ -7,14 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>authoring-app</title>
   <script>
-    ; (function () {
-      const saved = localStorage.getItem('authoring-theme')
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      const isDark = saved ? saved === 'dark' : prefersDark
-      if (isDark) {
-        document.documentElement.classList.add('dark')
-      }
-    })()
+    if (localStorage.getItem('authoring-theme') === 'dark') {
+      document.documentElement.classList.add('dark')
+    }
   </script>
 </head>
 

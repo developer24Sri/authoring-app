@@ -6,10 +6,10 @@ import { useTheme } from './context/ThemeContext';
 const Editor = lazy(() => import("./components/Editor/Editor"));
 
 function App() {
-  const {isDark, toggleTheme} = useTheme()
+  const { isDark, toggleTheme } = useTheme()
   return (
     <div className="flex flex-col h-screen bg-red-500 dark:bg-blue-500 overflow-hidden">
-        {/* TEMP: visible test button */}
+      {/* TEMP: visible test button */}
       <button
         onClick={toggleTheme}
         className="fixed bottom-4 right-4 z-50 px-4 py-2 rounded-lg
@@ -19,6 +19,9 @@ function App() {
       >
         {isDark ? '☀️ Light' : '🌙 Dark'}
       </button>
+      <div className="p-4 bg-red-500 dark:bg-green-500 text-white">
+        DARK MODE TEST — should be GREEN in dark, RED in light
+      </div>
       <TopBar />
       <div className="flex flex-1 overflow-hidden">
         <TreePanel />

@@ -1,40 +1,61 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 @plugin "@tailwindcss/typography";
 
-@variant dark (&:where(.dark, .dark *));
+@source "./**/*.{ts,tsx}";
+@source "../index.html";
 
-@media (prefers-color-scheme: dark) {
+/* ─── Theme variables ─────────────────────────────── */
+@theme {
   :root {
+    --bg-primary:    255 255 255;
+    --bg-secondary:  249 250 251;
+    --bg-tertiary:   243 244 246;
+    --text-primary:  17 24 39;
+    --text-secondary: 107 114 128;
+    --border-color:  229 231 235;
     color-scheme: light;
   }
-}
 
-/* Tiptap editor custom styles */
-@layer base {
+  :root.dark {
+    --bg-primary:    17 24 39;
+    --bg-secondary:  31 41 55;
+    --bg-tertiary:   55 65 81;
+    --text-primary:  249 250 251;
+    --text-secondary: 156 163 175;
+    --border-color:  75 85 99;
+    color-scheme: dark;
+  }
+
+  /* Force light as default — ignore OS */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.dark) {
+      color-scheme: light;
+    }
+  }
+
   .tiptap h1 { font-size: 1.875rem; font-weight: 700; margin: 1rem 0; }
-  .tiptap h2 { font-size: 1.5rem;   font-weight: 700; margin: 0.875rem 0; }
-  .tiptap h3 { font-size: 1.25rem;  font-weight: 600; margin: 0.75rem 0; }
+  .tiptap h2 { font-size: 1.5rem; font-weight: 700; margin: 0.875rem 0; }
+  .tiptap h3 { font-size: 1.25rem; font-weight: 600; margin: 0.75rem 0; }
   .tiptap p  { margin: 0.5rem 0; }
-  .tiptap ul { list-style-type: disc;    padding-left: 1.5rem; margin: 0.5rem 0; }
+  .tiptap ul { list-style-type: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
   .tiptap ol { list-style-type: decimal; padding-left: 1.5rem; margin: 0.5rem 0; }
   .tiptap blockquote {
-    border-left: 3px solid #e5e7eb;
+    border-left: 3px solid rgb(var(--border-color));
     padding-left: 1rem;
-    color: #6b7280;
+    color: rgb(var(--text-secondary));
     font-style: italic;
     margin: 0.75rem 0;
   }
   .tiptap strong { font-weight: 700; }
-  .tiptap em     { font-style: italic; }
-  .tiptap code   {
-    background: #f3f4f6;
+  .tiptap em { font-style: italic; }
+  .tiptap code {
+    background: rgb(var(--bg-tertiary));
     padding: 0.1rem 0.3rem;
     border-radius: 0.25rem;
     font-family: monospace;
     font-size: 0.875em;
   }
-
-  /* Placeholder */
   .tiptap p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     float: left;
@@ -42,20 +63,15 @@
     pointer-events: none;
     height: 0;
   }
-
   .tiptap img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
     margin: 8px 0;
   }
-}
-
-@layer base {
   .tiptap mark {
     background-color: #FEF08A;
     border-radius: 2px;
     padding: 0 2px;
   }
 }
-
