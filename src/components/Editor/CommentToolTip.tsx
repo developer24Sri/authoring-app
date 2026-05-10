@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useCurrentEditor } from '@tiptap/react'
 import { TrashCanIcon } from '../SVG/useSVG'
 import { useActiveNode } from '../../context/ActiveNodeContext'
+import { STORAGE_KEYS } from '../../constants'
 
 interface Comment {
     id: string
@@ -20,7 +21,7 @@ interface TooltipState {
 
 const CommentTooltip = () => {
     // const { state } = useTree()
-    const {activeNodeId} = useActiveNode();
+    const { activeNodeId } = useActiveNode();
     const { editor } = useCurrentEditor()
     const [tooltip, setTooltip] = useState<TooltipState | null>(null)
     const tooltipRef = useRef<HTMLDivElement>(null)
@@ -29,7 +30,7 @@ const CommentTooltip = () => {
     const getComments = (): Comment[] => {
         if (!activeNodeId) return []
         return JSON.parse(
-            localStorage.getItem(`comments-${activeNodeId}`) ?? '[]'
+            localStorage.getItem(`${STORAGE_KEYS.COMMENTS_PREFIX}${activeNodeId}`) ?? '[]'
         )
     }
 
@@ -43,7 +44,7 @@ const CommentTooltip = () => {
         if (!activeNodeId) return
         const updated = getComments().filter(c => c.id !== id)
         localStorage.setItem(
-            `comments-${activeNodeId}`,
+            `${STORAGE_KEYS.COMMENTS_PREFIX}${activeNodeId}`,
             JSON.stringify(updated)
         )
         setTooltip(null)

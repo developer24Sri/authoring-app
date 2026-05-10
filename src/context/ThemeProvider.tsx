@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { ThemeContext } from './ThemeContext'
+import { STORAGE_KEYS } from '../constants'
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const [isDark, setIsDark] = useState(() => {
-        const saved = localStorage.getItem('authoring-theme')
+        const saved = localStorage.getItem(STORAGE_KEYS.THEME)
         if (saved === 'dark') return true
         if (saved === 'light') return false
         return false // always default to light
@@ -14,10 +15,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         const root = document.documentElement
         if (isDark) {
             root.classList.add('dark')
-            localStorage.setItem('authoring-theme', 'dark')
+            localStorage.setItem(STORAGE_KEYS.THEME, 'dark')
         } else {
             root.classList.remove('dark')
-            localStorage.setItem('authoring-theme', 'light')
+            localStorage.setItem(STORAGE_KEYS.THEME, 'light')
         }
     }, [isDark])
 

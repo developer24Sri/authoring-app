@@ -13,6 +13,7 @@ import useDebounce from '../../hooks/useDebounce'
 // import CommentTooltip from './CommentTooltip'
 import EditorView from '../TreePanel/EditorView'
 import CommentTooltip from './CommentToolTip'
+import { EDITOR_CONFIG } from '../../constants'
 
 const Editor = () => {
   const { state, dispatch } = useTree()
@@ -29,7 +30,7 @@ const Editor = () => {
         payload: { id, content: { type: 'text', data: html } }
       })
     },
-    300
+    EDITOR_CONFIG.DEBOUNCE_MS
   )
 
   const editor = useEditor({
@@ -37,7 +38,7 @@ const Editor = () => {
       StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
       Image.configure({ inline: false, allowBase64: true }),
       Placeholder.configure({
-        placeholder: 'Start writing, or press + to insert content…',
+        placeholder: EDITOR_CONFIG.PLACEHOLDER_TEXT,
       }),
       Link.configure({
         openOnClick: false,

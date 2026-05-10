@@ -21,3 +21,8 @@ export const EDITOR_CONFIG = {
   DEBOUNCE_MS:      300,
   PLACEHOLDER_TEXT: 'Start writing, or press + to insert content…',
 } as const
+
+export const TREE_CONFIG = {
+  ROOT_ID:          'root',
+  INDENT_PX:        16,
+} as const

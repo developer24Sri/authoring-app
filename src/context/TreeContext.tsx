@@ -3,13 +3,14 @@ import { createContext, useContext, useReducer, useEffect, useMemo} from "react"
 import type { ReactNode } from "react";
 import type { TreeState, TreeAction, TreeContextValue } from "../types";
 import { createNode, initialState, removeNodeAndDescendants } from "../utils/treeHelpers";
+import { STORAGE_KEYS } from "../constants";
 
 
 const treeReducer = (state: TreeState, action: TreeAction): TreeState => {
     switch (action.type) {
         case "ADD_NODE": {
-            const { parentId, nodeType } = action.payload
-            const newNode = createNode(parentId, nodeType)
+            const { parentId, nodeType, id } = action.payload
+            const newNode = createNode(parentId, nodeType, id)
 
             return {
                 ...state,
@@ -67,7 +68,7 @@ const treeReducer = (state: TreeState, action: TreeAction): TreeState => {
 //if exisit load from localStorage or fallback to inital State
 const loadState = (): TreeState => {
     try {
-        const saved = localStorage.getItem("authoring-tree")
+        const saved = localStorage.getItem(STORAGE_KEYS.TREE)
         return saved ? JSON.parse(saved) : initialState
     } catch {
         return initialState
@@ -85,7 +86,7 @@ export const TreeProvider = ({ children }: { children: ReactNode }) => {
 
     //on every state changes we save it to localStorage
     useEffect(() => {
-        localStorage.setItem("authoring-tree", JSON.stringify(state))
+        localStorage.setItem(STORAGE_KEYS.TREE, JSON.stringify(state))
     }, [state])
 
     return (

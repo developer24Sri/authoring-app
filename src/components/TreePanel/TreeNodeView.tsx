@@ -1,3 +1,4 @@
+import { TREE_CONFIG } from '../../constants'
 import type { NodeType } from '../../types'
 
 interface TreeNodeViewProps {
@@ -45,7 +46,7 @@ const TreeNodeView = ({
             ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
             : 'hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-300'}
         `}
-        style={{ paddingLeft: `${depth * 16 + 8}px` }}
+        style={{ paddingLeft: `${depth * TREE_CONFIG.INDENT_PX + 8}px` }}
         onClick={onSelect}
         onMouseEnter={onHoverEnter}
         onMouseLeave={onHoverLeave}

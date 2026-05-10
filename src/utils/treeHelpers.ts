@@ -1,12 +1,14 @@
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+import { NODE_LABELS, TREE_CONFIG } from "../constants";
 import type { TreeNode, TreeState, NodeType } from "../types";
 
 export const createNode = (
     parentId: string,
-    nodeType: NodeType
+    nodeType: NodeType,
+    id: string
 ): TreeNode => ({
-    id: uuidv4(),
-    label: nodeType === "container" ? "New Section" : "New Item",
+    id,
+    label: nodeType === "container" ? NODE_LABELS.DEFAULT_CONTAINER : NODE_LABELS.DEFAULT_LEAF,
     type: nodeType,
     parentId,
     children: [],
@@ -14,12 +16,12 @@ export const createNode = (
 })
 
 export const initialState: TreeState = {
-    rootId: "root",
+    rootId: TREE_CONFIG.ROOT_ID,
     // activeNodeId: null,
     nodes: {
         root: {
-            id: "root",
-            label: "My Course",
+            id: TREE_CONFIG.ROOT_ID,
+            label: NODE_LABELS.ROOT,
             type: "container",
             parentId: null,
             children: ["chapter-1"],
@@ -29,7 +31,7 @@ export const initialState: TreeState = {
             id: 'chapter-1',
             label: 'Chapter 1',
             type: 'container',
-            parentId: 'root',
+            parentId: TREE_CONFIG.ROOT_ID,
             children: ['lesson-1'],
             content: { type: 'text', data: '' }
         },

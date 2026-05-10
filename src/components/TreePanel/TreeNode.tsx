@@ -30,7 +30,7 @@ const TreeNode = ({ id, depth = 0 }: TreeNodeProps) => {
     e.stopPropagation()
     if (node.type !== 'container') return
     const newId = crypto.randomUUID()
-    dispatch({ type: 'ADD_NODE', payload: { parentId: id, nodeType } })
+    dispatch({ type: 'ADD_NODE', payload: { parentId: id, nodeType, id: newId } })
     setActiveNodeId(newId)
     setIsExpanded(true)
   }

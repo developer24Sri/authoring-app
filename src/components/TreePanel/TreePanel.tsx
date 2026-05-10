@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTree } from '../../context/TreeContext'
+import { useActiveNode } from '../../context/ActiveNodeContext'
 import TreeNode from './TreeNode'
 import HamburgerDrawer from './HamburgerDrawer'
 import { HamburgerIcon } from '../SVG/useSVG'
@@ -8,11 +9,14 @@ type ViewMode = 'tree' | 'graph'
 
 const TreePanel = () => {
   const { state, dispatch } = useTree()
+  const {setActiveNodeId} = useActiveNode();
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [viewMode, setViewMode] = useState<ViewMode>('tree')
 
   const handleAddRoot = (type: 'container' | 'leaf') => {
-    dispatch({ type: 'ADD_NODE', payload: { parentId: state.rootId, nodeType: type } })
+    const newId = crypto.randomUUID();
+    dispatch({ type: 'ADD_NODE', payload: { parentId: state.rootId, nodeType: type ,id:newId } })
+    setActiveNodeId(newId);
   }
 
   return (

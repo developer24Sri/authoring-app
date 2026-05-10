@@ -3,6 +3,7 @@ import { BubbleMenu } from '@tiptap/react/menus'
 import { useState } from 'react'
 import { CommentBoxIcon, LinkIcon } from '../SVG/useSVG'
 import { useActiveNode } from '../../context/ActiveNodeContext'
+import { STORAGE_KEYS } from '../../constants'
 
 const Toolbar = () => {
     const { editor } = useCurrentEditor()
@@ -62,7 +63,7 @@ const Toolbar = () => {
         const commentText = window.prompt(`Add comment for: "${selectedText}"`)
         if (!commentText?.trim()) return
 
-        const key = `comments-${activeNodeId ?? 'unknown'}`
+        const key = `${STORAGE_KEYS.COMMENTS_PREFIX}${activeNodeId ?? 'unknown'}`
         const existing = JSON.parse(localStorage.getItem(key) ?? '[]')
         const newComment = {
             id: crypto.randomUUID(),

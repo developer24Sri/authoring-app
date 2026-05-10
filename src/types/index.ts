@@ -21,7 +21,7 @@ export interface TreeState {
 }
 
 export type TreeAction =
-    | { type: 'ADD_NODE'; payload: { parentId: string; nodeType: NodeType } }
+    | { type: 'ADD_NODE'; payload: { parentId: string; nodeType: NodeType; id: string } }
     | { type: 'REMOVE_NODE'; payload: { id: string } }
     | { type: 'UPDATE_CONTENT'; payload: { id: string; content: NodeContent } }
     | { type: 'RENAME_NODE'; payload: { id: string; label: string } }
