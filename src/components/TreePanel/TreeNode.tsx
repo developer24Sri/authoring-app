@@ -43,6 +43,8 @@ const TreeNode = ({ id, depth = 0 }: TreeNodeProps) => {
     )
     if (!confirmDelete) return
     dispatch({ type: 'REMOVE_NODE', payload: { id } })
+    //clear active node if the deleted node was selected
+    if(activeNodeId === id) setActiveNodeId(null);
   }
 
   const commitRename = () => {

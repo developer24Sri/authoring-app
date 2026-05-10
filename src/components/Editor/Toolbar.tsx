@@ -8,7 +8,7 @@ import { STORAGE_KEYS } from '../../constants'
 const Toolbar = () => {
     const { editor } = useCurrentEditor()
     // const { state } = useTree();
-    const {activeNodeId} = useActiveNode();
+    const { activeNodeId } = useActiveNode();
     const [showLinkInput, setShowLinkInput] = useState(false)
     const [linkUrl, setLinkUrl] = useState('')
 
@@ -82,6 +82,12 @@ const Toolbar = () => {
         <BubbleMenu
             options={{ placement: 'top', offset: 6 }}
             className="flex items-center gap-0.5 bg-white border border-gray-200 rounded-lg shadow-lg px-1 py-1 z-50"
+            shouldShow={({ editor }) => {
+                if (editor.isActive("image")) return false
+                const { empty } = editor.state.selection
+                if (empty) return false
+                return true
+            }}
         >
             {/* Link input mode */}
             {showLinkInput ? (
