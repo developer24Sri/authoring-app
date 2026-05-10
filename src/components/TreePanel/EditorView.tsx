@@ -18,10 +18,10 @@ const EditorView = ({
   onBreadcrumbClick
 }: EditorViewProps) => {
   return (
-    <div className="flex-1 flex flex-col bg-white dark:bg-gray-900 overflow-hidden">
+    <div className="flex-1 flex flex-col bg-white overflow-hidden">
 
       {/* Header with breadcrumb */}
-      <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100 dark:border-gray-700">
+      <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100">
         <div className="flex items-center gap-1 flex-wrap">
           {breadcrumbs.map(ancestor => (
             <div key={ancestor.id} className="flex items-center gap-1">
@@ -31,12 +31,12 @@ const EditorView = ({
               >
                 {ancestor.label}
               </button>
-              <svg className="w-3 h-3 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
           ))}
-          <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-100 leading-tight">
+          <h2 className="text-sm font-semibold text-gray-800 leading-tight">
             {activeNode.label}
           </h2>
         </div>
@@ -44,7 +44,7 @@ const EditorView = ({
 
       {/* Widget inserter */}
       {editor && (
-        <div className="flex items-center gap-3 px-6 py-2 border-b border-gray-50 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+        <div className="flex items-center gap-3 px-6 py-2 border-b border-gray-50 bg-gray-50/50">
           <span className="text-xs text-gray-400 font-medium">Insert</span>
           <WidgetInserter editor={editor} />
         </div>
@@ -53,7 +53,7 @@ const EditorView = ({
       {/* Editor content */}
       <div className="flex-1 overflow-y-auto">
         {editor && <Toolbar />}
-        <EditorContent editor={editor} className="h-full dark:text-white" />
+        <EditorContent editor={editor} className="h-full" />
       </div>
     </div>
   )

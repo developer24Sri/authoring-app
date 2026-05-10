@@ -1,6 +1,6 @@
+import { lazy, Suspense } from 'react'
 import TopBar from './components/TopBar/TopBar'
 import TreePanel from './components/TreePanel/TreePanel'
-import { lazy, Suspense } from 'react'
 
 
 const Editor = lazy(() => import("./components/Editor/Editor"));
@@ -8,7 +8,7 @@ const Editor = lazy(() => import("./components/Editor/Editor"));
 function App() {
  
   return (
-    <div className="flex flex-col h-screen bg-red-500 dark:bg-blue-500 overflow-hidden">
+    <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
       <TopBar />
       <div className="flex flex-1 overflow-hidden">
         <TreePanel />

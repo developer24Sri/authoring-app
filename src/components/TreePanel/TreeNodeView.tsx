@@ -43,8 +43,8 @@ const TreeNodeView = ({
           group flex items-center gap-1 px-2 py-1.5 rounded-md cursor-pointer
           transition-colors duration-100 relative
           ${isActive
-            ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-            : 'hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-300'}
+            ? 'bg-blue-100 text-blue-800 '
+            : 'hover:bg-gray-100 text-gray-700 '}
         `}
         style={{ paddingLeft: `${depth * TREE_CONFIG.INDENT_PX + 8}px` }}
         onClick={onSelect}
@@ -82,7 +82,7 @@ const TreeNodeView = ({
             onBlur={onRenameBlur}
             onKeyDown={onRenameKeyDown}
             onClick={e => e.stopPropagation()}
-            className="flex-1 text-sm bg-white border border-blue-400 rounded px-1 outline-none min-w-0 dark:bg-gray-800"
+            className="flex-1 text-sm bg-white border border-blue-400 rounded px-1 outline-none min-w-0"
           />
         ) : (
           <span

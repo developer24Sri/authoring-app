@@ -74,7 +74,7 @@ const Editor = () => {
 
   if (!activeNode) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center text-gray-400 bg-gray-50 dark:bg-gray-900">
+      <div className="flex-1 flex flex-col items-center justify-center text-gray-400 bg-gray-50">
         <div className="text-5xl mb-4">✍️</div>
         <p className="text-base font-medium text-gray-500">Nothing selected</p>
         <p className="text-sm mt-1">Click a node in the tree to start editing</p>

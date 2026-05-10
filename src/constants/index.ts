@@ -1,6 +1,6 @@
 export const STORAGE_KEYS = {
   TREE:             'authoring-tree',
-  THEME:            'authoring-theme',
+  // THEME:            'authoring-theme',
   INVITED_MEMBERS:  'authoring-invited-members',
   COMMENTS_PREFIX:  'comments-',
 } as const
@@ -8,7 +8,7 @@ export const STORAGE_KEYS = {
 export const MOCK_USER = {
   name:   'John Doe',
   email:  'john@example.com',
-  avatar: 'JD',
+avatar: 'JD',
 } as const
 
 export const NODE_LABELS = {
