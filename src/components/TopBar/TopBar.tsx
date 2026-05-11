@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import useOnClickOutside from '../../hooks/useOneClickOutside'
 import { MOCK_USER, STORAGE_KEYS } from '../../constants'
+import { BellIcon } from '../SVG/useSVG'
 // import { useTheme } from '../../context/ThemeContext'
 
 // interface User {
@@ -152,7 +153,7 @@ const TopBar = () => {
             </div>
           )}
         </div>
-
+        <BellIcon />
         {/* User avatar + menu */}
         <div className="relative" ref={userMenuRef}>
           <button
@@ -211,7 +212,6 @@ const TopBar = () => {
                     </div>
                   }
                 /> */}
-
                 <MenuButton
                   icon={
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -278,6 +278,7 @@ const InvitedList = () => {
 
   return (
     <div className="mt-3 pt-3 border-t border-gray-100">
+
       <p className="text-xs text-gray-400 mb-2">Already invited</p>
       <div className="flex flex-col gap-1.5">
         {members.map(email => (

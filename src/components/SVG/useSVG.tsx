@@ -120,7 +120,7 @@ export const LinkIcon: React.FC<SVGProps> = ({
     viewBox="0 0 24 24"
     className={className}
     fill={noFill ? "none" : fill}
-    >
+  >
     <g id="SVGRepo_bgCarrier" strokeWidth="0" />
     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
     <g id="SVGRepo_iconCarrier"> <path d="M15.197 3.35462C16.8703 1.67483 19.4476 1.53865 20.9536 3.05046C22.4596 4.56228 22.3239 7.14956 20.6506 8.82935L18.2268 11.2626M10.0464 14C8.54044 12.4882 8.67609 9.90087 10.3494 8.22108L12.5 6.06212" stroke="#9CA3AF" strokeWidth="" strokeLinecap="round" /> <path d="M13.9536 10C15.4596 11.5118 15.3239 14.0991 13.6506 15.7789L11.2268 18.2121L8.80299 20.6454C7.12969 22.3252 4.55237 22.4613 3.0464 20.9495C1.54043 19.4377 1.67609 16.8504 3.34939 15.1706L5.77323 12.7373" stroke="#9CA3AF" strokeWidth="" strokeLinecap="round" /> </g>
@@ -135,13 +135,29 @@ export const CommentBoxIcon: React.FC<SVGProps> = ({
   className,
 }) => (
   <svg
-   fill={fill}
-   width={width} 
-   height={height}
+    fill={fill}
+    width={width}
+    height={height}
     className={className}
-     viewBox="0 0 1920 1920"
-      xmlns="http://www.w3.org/2000/svg"
-       stroke="#808080"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1662.178 0v1359.964h-648.703l-560.154 560.154v-560.154H0V0h1662.178ZM1511.07 151.107H151.107v1057.75h453.321v346.488l346.489-346.488h560.154V151.107ZM906.794 755.55v117.53H453.32V755.55h453.473Zm302.063-302.365v117.529H453.32V453.185h755.536Z" fillRule="evenodd"></path> </g></svg>
+    viewBox="0 0 1920 1920"
+    xmlns="http://www.w3.org/2000/svg"
+    stroke="#808080"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1662.178 0v1359.964h-648.703l-560.154 560.154v-560.154H0V0h1662.178ZM1511.07 151.107H151.107v1057.75h453.321v346.488l346.489-346.488h560.154V151.107ZM906.794 755.55v117.53H453.32V755.55h453.473Zm302.063-302.365v117.529H453.32V453.185h755.536Z" fillRule="evenodd"></path> </g></svg>
+)
+
+export const BellIcon: React.FC<SVGProps> = ({
+  width = DEFAULT_WIDTH,
+  height = DEFAULT_HEIGHT,
+  fill = DEFAULT_FILL,
+  className,
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    fill={fill}
+    className={className}
+  ><g fill="none" stroke="#4b5563" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M11.962 17.986h6.81a1.555 1.555 0 0 0 1.512-2.175c-.36-1.088-1.795-2.393-1.795-3.677c0-2.85 0-3.6-1.404-5.276a5.025 5.025 0 0 0-1.653-1.283l-.783-.38a1.089 1.089 0 0 1-.511-.73a2.023 2.023 0 0 0-2.176-1.707a2.023 2.023 0 0 0-2.12 1.707a1.089 1.089 0 0 1-.567.73l-.783.38A5.025 5.025 0 0 0 6.84 6.858c-1.403 1.676-1.403 2.426-1.403 5.276c0 1.284-1.37 2.458-1.73 3.611c-.217.697-.337 2.241 1.48 2.241z" /><path d="M15.225 17.986a3.198 3.198 0 0 1-3.263 3.263A3.195 3.195 0 0 1 8.7 17.986" /></g></svg>
 )
 
 // ─────────────────────────────────────────────
@@ -153,6 +169,7 @@ const Icons = {
   Seperator: SeperatorIcon,
   Link: LinkIcon,
   CommentBox: CommentBoxIcon,
+  Bell: BellIcon,
 };
 
 export default Icons;
